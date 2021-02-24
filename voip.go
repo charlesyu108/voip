@@ -34,7 +34,7 @@ func NewVoipPeer(listeningPort string, peerAddr string) *VoipPeer {
 	peer.recvData = make(chan []byte)
 	peer.sendData = make(chan []byte)
 	portaudio.Initialize()
-	peer.audioStream, err = portaudio.OpenDefaultStream(1, 1, 44100, 256, peer.streamCallback)
+	peer.audioStream, err = portaudio.OpenDefaultStream(1, 1, 44100, 1024, peer.streamCallback)
 	chk(err)
 
 	return peer
@@ -62,7 +62,7 @@ func (peer *VoipPeer) Start() {
 
 func (peer *VoipPeer) receivePackets() {
 	for {
-		receiver := make([]byte, 1024)
+		receiver := make([]byte, 8096)
 		peer.conn.ReadFromUDP(receiver)
 		peer.recvData <- receiver
 	}
@@ -70,7 +70,7 @@ func (peer *VoipPeer) receivePackets() {
 
 func (peer *VoipPeer) sendPackets() {
 	for {
-		sendBuf := make([]byte, 1024)
+		sendBuf := make([]byte, 8096)
 		message := <-peer.sendData
 
 		copy(sendBuf, message)
