@@ -14,6 +14,7 @@ Install:
 ```
 go install
 ```
+---
 
 The interface will prompt you to provide a listening port and
 a peer address to connect to. 
@@ -24,6 +25,12 @@ on your host machine `(e.g. "8080")`.
 The peer address should be a
 resolvable address on your local-area-network `(e.g. "192.168.1.221:8080",
 "localhost:8080", "Charles-MBP:8080")`
+
+---
+
+To talk to yourself, you can try:
+* Listening Port: `8080`
+* Peer Address: `localhost:8080`
 
 
 # Additional Dependencies
